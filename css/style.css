@@ -1,3 +1,10 @@
+@media(min-width: 600px) and (max-width:800px){
+  body{
+    background: skyblue;
+  }
+
+}
+
 body {
   font-family: 'Courier New', monospace;
   font-size: 14px;
@@ -21,6 +28,10 @@ body {
   margin-bottom: 15px;
 }
 
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
 .btn {
   width: 80px;
   height: 45px;
@@ -29,13 +40,12 @@ body {
   font-weight: bold;
   cursor: pointer;
   user-select: none;
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
+  justify-items: center;
 }
 
 .inactive {
   opacity: 0.6;
+}
+.non{
+  display: none;
 }

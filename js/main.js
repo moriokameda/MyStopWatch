@@ -1,67 +1,79 @@
 'use strict';
 
 {
-  const timer = document.getElementById('timer');
-  const start = document.getElementById('start');
-  const stop = document.getElementById('stop');
-  const reset = document.getElementById('reset');
-  
+  const timer = $('#timer');
+  const start = $('#start');
+  const stop = $('#stop');
+  const reset = $('#reset');
+
   let startTime;
   let timeoutId;
   let elapsedTIme = 0;
 
-  function countUp (){
+  function countUp() {
     const d = new Date(Date.now() - startTime + elapsedTIme);
     const m = String(d.getMinutes()).padStart(2, '0');
     const s = String(d.getSeconds()).padStart(2, '0');
     const ms = String(d.getMilliseconds()).padStart(3, '0');
 
-    timer.textContent = `${m}:${s}.${ms}`;
+    timer.text(`${m}:${s}.${ms}`);
     timeoutId = setTimeout(() => {
       countUp();
     }, 10);
   }
 
-  function setButtonStateInitial () {
-    start.classList.remove('inactive');
-    stop.classList.add('inactive');
-    reset.classList.add('inactive');
+  function setButtonStateInitial() {
+    start.removeClass('inactive');
+    start.removeClass('non');
+    stop.addClass('inactive');
+    stop.addClass('non');
+    reset.addClass('inactive');
+    reset.addClass('non');
   }
-  function setButtonStateRunning () {
-    start.classList.add('inactive');
-    stop.classList.remove('inactive');
-    reset.classList.add('inactive');
+  function setButtonStateRunning() {
+    start.addClass('inactive');
+    start.addClass('non');
+    stop.removeClass('inactive');
+    stop.removeClass('non');
+    reset.addClass('inactive');
   }
-  function setButtonStateStopped () {
-    start.classList.remove('inactive');
-    stop.classList.add('inactive');
-    reset.classList.remove('inactive');
+  function setButtonStateStopped() {
+    start.removeClass('inactive');
+    start.removeClass('non');
+
+    stop.addClass('inactive');
+    stop.addClass('non');
+    reset.removeClass('inactive');
+    reset.removeClass('non');
   }
 
   setButtonStateInitial();
 
-  start.addEventListener('click', () => {
-    if(start.classList.contains('inactive') === true){
+  // start.addEventListener('click', () => {
+  start.click(function () {
+    if (start.hasClass('inactive') === true) {
       return;
     }
     setButtonStateRunning();
     startTime = Date.now();
     countUp();
   });
-  stop.addEventListener('click', () => {
-    if(stop.classList.contains('inactive') === true){
+  // stop.addEventListener('click', () => {
+  stop.click(function () {
+    if (stop.hasClass('inactive') === true) {
       return;
     }
     setButtonStateStopped();
     clearTimeout(timeoutId);
     elapsedTIme += Date.now() - startTime;
   });
-  reset.addEventListener('click', () => {
-    if(start.classList.contains('inactive') === true){
+  // reset.addEventListener('click', () => {
+  reset.click(function () {
+    if (start.hasClass('inactive') === true) {
       return;
     }
     setButtonStateInitial();
-    timer.textContent = `00:00.000`;
+    timer.text( `00:00.000`);
     elapsedTIme = 0;
   });
 }
